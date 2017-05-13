@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="xApp">
+  <head>
+    <title>Find A Therapist</title>
+    <link href="app/css/styles.css" rel="stylesheet" type="text/css"/>
+    <script src="app/angular.min.js"></script>
+    <script src="app/app.js"></script>
+  </head>
+  <body>
+      <header ng-include="'header.html'"></header>
+      <div class="content">
+      <div ng-controller="TherapyController">
+           <button ng-click="order = 'name'">Order By Name</button>
+           <button ng-click="order = 'rate'">Order By Rate</button>
+           <input type="text" ng-model="search" placeholder="Find A Therapist"/>
+           <ul>
+             <li ng-repeat="x in therapists | orderBy: order | filter: search" ng-show="x.available">
+             <h3>{{x.name}} - {{x.rate | currency: '$'}}/Hourly</h3>
+                <div class="remove" ng-click="removeTherapist(x)">x</div>
+                <span class="belt" style="background: {{x.focus}}">{{x.focus}} category</span>
+            </li>
+          </ul>
+          <h3>Are You A Therapist?<br>Add Your Name To The List**</h3>
+          <figcaption>**Subject to credential verification</figcaption>
+          <form ng-submit="addTherapist()">
+          <input type="text" placeholder="name" ng-model="newtherapist.name"/>
+          <input type="text" placeholder="focus" ng-model="newtherapist.focus"/>
+          <input type="text" placeholder="rate" ng-model="newtherapist.rate"/>
+          <input type="submit" value="Add Your Services"/>
+          </form>
+     </div>
+     </div>
+</body>
+</html>
